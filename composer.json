@@ -1,0 +1,26 @@
+{
+    "name": "jsehersan/social",
+    "description": "",
+    "authors": [
+        {
+            "name": "Jose Maria Hernandez San Martin",
+            "email": "jsehersan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "facebook/php-sdk-v4" : "4.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations",
+            "src/controllers",
+            "src/models"
+        ],
+        "psr-0": {
+            "Jsehersan\\Social\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
