@@ -1,9 +1,10 @@
 <?php namespace Jsehersan\Social\Controllers;
 
-
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
 use Channel;
 
-class HomeController extends BaseController {
+class ConfigController extends BaseController {
     /*
       |--------------------------------------------------------------------------
       | Default Home Controller
@@ -21,19 +22,14 @@ class HomeController extends BaseController {
    // protected $layout = 'test';
     public function getIndex()
     {
-       //var_dump(Channel::all());
-       foreach (Channel::all() as $c ) {
-         # code...
-          var_dump($c->description);
-            
-       }
+       return View::make('social::newChannel');
 
     }
 
     
-     public function getDonde() {
+     public function postNewChannel() {
 
-        return $this->layout->content = View::make('front.donde');
+        return var_dump(Input::all()); 
      }
     public function  getEmpresa(){
 
