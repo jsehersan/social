@@ -1,4 +1,4 @@
-<?php namespace Jsehersan\Social\channel;
+<?php namespace Jsehersan\Social\Channel;
 /**
  * Created by PhpStorm.
  * User: JOSE
@@ -6,8 +6,8 @@
  * Time: 16:23
  */
 
-
-class Facebook {
+ use Channel;
+class Facebook extends Channel{
 
     public static function holaface (){
         echo "eei facebook";

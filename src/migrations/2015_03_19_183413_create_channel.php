@@ -17,7 +17,7 @@ class CreateChannel extends Migration {
 		{
 			//
             $table->increments('id');
-            $table->char('tipo');
+            $table->char('type');
             $table->string('description',150);
             $table->text('params');
             

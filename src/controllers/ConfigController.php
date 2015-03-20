@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Redirect;
+use Jsehersan\Social\channel\Facebook;
 use Channel;
 
 class ConfigController extends BaseController {
@@ -22,14 +25,24 @@ class ConfigController extends BaseController {
    // protected $layout = 'test';
     public function getIndex()
     {
-       return View::make('social::newChannel');
+      var_dump(Facebook::all());
+      return View::make('social::newChannel');
 
     }
 
     
      public function postNewChannel() {
 
-        return var_dump(Input::all()); 
+        if(Input::get('description')){
+          $ch=new Channel();
+          $ch->description=Input::get('description');
+          $ch->type=Input::get('type-channel');
+          if ($ch->save()){
+            return Redirect::back()->with('message','Canal creado');
+          }
+
+        }
+
      }
     public function  getEmpresa(){
 
