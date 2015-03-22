@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\App;
 use Jsehersan\Social\channel\Facebook;
 use Channel;
+use Jsehersan\Social\Helper;
 
 class ConfigController extends BaseController {
     /*
@@ -25,7 +27,7 @@ class ConfigController extends BaseController {
    // protected $layout = 'test';
     public function getIndex()
     {
-     // var_dump(Facebook::all());
+
       return View::make('social::newChannel');
 
     }
@@ -48,6 +50,12 @@ class ConfigController extends BaseController {
 
      }
     public function  getConfigChannel($id){
+       
+       $ch=Helper::getChannel($id);
+       if (!$ch){
+        return "Canal no encontrado";
+       }
+
 
        return View::make('social::configChannel');
 

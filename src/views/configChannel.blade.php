@@ -17,10 +17,7 @@
 			<h3>New Channel</h3>
 		</div>
 		<div style="text-align:center;margin-top:15px;" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<select name="type-channel" id="inputType-Channel" class="form-control" required="required">
-				<option value="f">Facebook</option>
-				<option value="t">Twitter</option>
-			</select>
+		
 		</div>
 	</div>
 	
@@ -32,9 +29,9 @@
 	</div>
 
 	<div class="row">
-		<div style="text-align:center;margin-top:25px;"class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+		{{-- <div style="text-align:center;margin-top:25px;"class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 			<input type="submit" value="Continue" class="btn btn-primary"/>
-		</div>
+		</div> --}}
 		 
 	</div>
 	{{Form::close()}}

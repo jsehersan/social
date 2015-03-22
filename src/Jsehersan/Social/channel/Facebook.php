@@ -9,6 +9,8 @@
  use Channel;
 class Facebook extends Channel{
 
+	public $tmp_config="cfg_facebook";
+	
     public static function holaface (){
         echo "eei facebook";
     }
