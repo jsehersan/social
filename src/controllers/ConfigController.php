@@ -25,7 +25,7 @@ class ConfigController extends BaseController {
    // protected $layout = 'test';
     public function getIndex()
     {
-      var_dump(Facebook::all());
+     // var_dump(Facebook::all());
       return View::make('social::newChannel');
 
     }
@@ -38,15 +38,18 @@ class ConfigController extends BaseController {
           $ch->description=Input::get('description');
           $ch->type=Input::get('type-channel');
           if ($ch->save()){
-            return Redirect::back()->with('message','Canal creado');
+            // return Redirect::
+            //action('Jsehersan\Social\Controllers\ConfigController@getConfigChannel', array($ch->id))->with('message','Canal creado');
+            return Redirect::route('configChannel',array($ch->id));
+
           }
 
         }
 
      }
-    public function  getEmpresa(){
+    public function  getConfigChannel($id){
 
-        return $this->layout->content = View::make('front.empresa');
+       return View::make('social::configChannel');
 
     }
      public function  getMantenimiento(){

@@ -12,4 +12,7 @@ class Facebook extends Channel{
     public static function holaface (){
         echo "eei facebook";
     }
+    public static function getParam($params){
+    	
+    }
 } 
