@@ -1,3 +1,4 @@
+<?php use Jsehersan\Social\Helper; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -13,6 +14,13 @@
 <script src="//code.jquery.com/jquery.js"></script>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<script type="text/javascript">
+  url_aj="{{URL::to('social/aj/')}}";
+</script>
+@section('head')
+<link rel="stylesheet" href="{{Helper::asset('css/style.css')}}">
+@show
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -45,5 +53,8 @@
 			@yield('main')
 		</div>
 	</div>
+  @section('js')
+  <script src="{{Helper::asset('js/scripts.js')}}"></script>
+  @show
 </body>
 </html>

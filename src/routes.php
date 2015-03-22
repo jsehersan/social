@@ -1,5 +1,8 @@
 <?php
 
+//Ajax
+Route::post('social/aj/savedeschannel','Jsehersan\Social\Controllers\ConfigController@ajSaveDesChannel');
+
 Route::post('social/config/newChannel','Jsehersan\Social\Controllers\ConfigController@postNewChannel');
 
 Route::get('social','Jsehersan\Social\Controllers\HomeController@getIndex');

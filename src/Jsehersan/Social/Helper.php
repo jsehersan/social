@@ -32,4 +32,16 @@ class Helper {
     public static function getParam($params){
     	
     }
+    public static function asset($url){
+    	return asset('packages/jsehersan/social/'.$url);
+    }
+    public static function jsonSet($json,$params){
+
+    	//Primero descodificamos
+    	$json=json_decode($json,true);
+    	foreach ($params as $id => $key){
+    		$json[$id]=$key;
+    	}return json_encode($json);
+    }
+
 } 
