@@ -36,8 +36,8 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="{{URL::to('social/config')}}">Home</a></li>
-              <li><a href="#">Clannels</a></li>
+              <li ><a href="{{URL::to('social/config')}}">Home</a></li>
+              <li><a href="{{URL::to('social/channels')}}">Clannels</a></li>
               
               
            

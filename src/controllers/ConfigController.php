@@ -1,5 +1,7 @@
 <?php namespace Jsehersan\Social\Controllers;
 
+use Facebook\FacebookCanvasLoginHelper;
+use Facebook\FacebookClientException;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
@@ -7,6 +9,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
 use Jsehersan\Social\channel\Facebook;
+use Facebook\FacebookSession;
 use Channel;
 use Jsehersan\Social\Helper;
 
@@ -53,23 +56,7 @@ class ConfigController extends BaseController {
 
 
     public function  getConfigChannel($id){
-       
-      $params='{
-                "key" : "12344",
-                "access_token" : "12344"
-              }';
 
-      $new=Helper::jsonSet(Channel::find(12)->params,
-      array('access_token' =>'dfghrthjfhbfdgrtdh'
-        ));          
-      $c12=Channel::find(12);
-      $c12->params=$new;
-      $c12->save();
-      $arr=json_decode($new);
-
-      var_dump($arr);
-
-      exit();
 
        $ch=Helper::getChannel($id);
        if (!$ch){return "Canal no encontrado";}
@@ -88,6 +75,39 @@ class ConfigController extends BaseController {
         return Response::json(true);
       } return Response::json(false);
       
-    } 
+    }
+    public function ajfb_ValidApp(){
+        $id_app=Input::get('id_app');
+        $secret_app=Input::get('id_secret');
+
+        session_start();
+
+        try
+        {
+            FacebookSession::setDefaultApplication($id_app,$secret_app);
+            $helper = new FacebookCanvasLoginHelper(URL::to('test'));
+        }
+        catch(FacebookClientException $ex)
+        {
+           return Response::json($ex);
+        }
+
+
+
+
+
+
+       // return Response::json($helper->getLoginUrl());
+    }
+
+    public function delChannel(){
+
+        if (Input::get('id')){
+          if(Channel::find(Input::get('id'))->delete()){
+             return Redirect::back()->with('message','Canal eliminado correctamente');
+          }
+        }
+
+    }
 
 }

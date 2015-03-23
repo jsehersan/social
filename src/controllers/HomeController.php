@@ -1,8 +1,14 @@
 <?php namespace Jsehersan\Social\Controllers;
 
-
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\App;
+use Jsehersan\Social\channel\Facebook;
 use Channel;
-
+use Jsehersan\Social\Helper;
 class HomeController extends BaseController {
     /*
       |--------------------------------------------------------------------------
@@ -31,9 +37,13 @@ class HomeController extends BaseController {
     }
 
     
-     public function getDonde() {
+     public function getChannels() {
 
-        return $this->layout->content = View::make('front.donde');
+         $channels=Channel::all();
+         return View::make('social::listChannels',
+             compact(
+                 'channels'
+             ));
      }
     public function  getEmpresa(){
 
