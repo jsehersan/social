@@ -3,6 +3,7 @@
 //Ajax
 Route::post('social/aj/savedeschannel','Jsehersan\Social\Controllers\ConfigController@ajSaveDesChannel');
 Route::post('social/aj/validapp','Jsehersan\Social\Controllers\ConfigController@ajfb_ValidApp');
+Route::get('social/aj/validapp','Jsehersan\Social\Controllers\ConfigController@ajfb_ValidApp');
 
 Route::post('social/config/newChannel','Jsehersan\Social\Controllers\ConfigController@postNewChannel');
 

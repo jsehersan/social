@@ -11,6 +11,7 @@
 <div class="row">
 	<div class="col-md-6">
 		 	{{Form::open(array('url'=>URL::to('social/config/newChannel'),'method'=>'post'))}}
+		 	{{ Form::hidden('id_ch', $ch->id) }}
 			<div class="row">
 				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 					<h3>Channel <small>@if ($ch->type=='f')Facebook @endif </small></h3>

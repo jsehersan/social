@@ -43,5 +43,12 @@ class Helper {
     		$json[$id]=$key;
     	}return json_encode($json);
     }
-
+    public static function dd($dump,$exit=true){
+        echo "<pre>";
+        var_dump($dump);
+        echo "</pre>";
+        if ($exit==true){
+            exit();
+        }
+    }
 } 

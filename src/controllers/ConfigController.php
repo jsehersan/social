@@ -1,15 +1,27 @@
 <?php namespace Jsehersan\Social\Controllers;
 
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\GraphObject;
+use Facebook\FacebookRequestException;
+use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookResponse;
+use Facebook\GraphUser;
 use Facebook\FacebookCanvasLoginHelper;
-use Facebook\FacebookClientException;
+
+use Facebook\FacebookSDKException;
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\App;
+
 use Jsehersan\Social\channel\Facebook;
-use Facebook\FacebookSession;
+
+
 use Channel;
 use Jsehersan\Social\Helper;
 
@@ -77,19 +89,32 @@ class ConfigController extends BaseController {
       
     }
     public function ajfb_ValidApp(){
-        $id_app=Input::get('id_app');
-        $secret_app=Input::get('id_secret');
-
         session_start();
+        $id_app=Input::get('id_app');
+        $secret_app=Input::get('secret_app');
+        $id_ch=Input::get('id_ch');
+
 
         try
         {
             FacebookSession::setDefaultApplication($id_app,$secret_app);
-            $helper = new FacebookCanvasLoginHelper(URL::to('test'));
+            $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id_ch));
+            $url=$helper->getLoginUrl();
+            $chDB=Facebook::find($id_ch);
+            $chDB->setParam('APP_ID',$id_app);
+            $chDB->setParam('APP_SECRET',$secret_app);
+            return Response::json(array(
+                'status'=>true,
+                'url' => $url
+            ));
         }
-        catch(FacebookClientException $ex)
+        catch(FacebookSDKException $ex)
         {
-           return Response::json($ex);
+
+           return Response::json(array(
+               'status'=>false,
+               'error' => $ex
+           ));
         }
 
 
