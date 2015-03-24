@@ -26,5 +26,12 @@ class Channel extends Model
         }
     }
 
+    public function getParam($nombre){
+        $pr=json_decode($this->params,true);
+        if (isset($pr[$nombre])){
+            return $pr[$nombre];
+        }   return false;
+    }
+
 
 }

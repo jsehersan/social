@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <div class="input-group">
-                  <input name="fb-app-id"  type="text" class="form-control" placeholder="Facebook App ID" aria-describedby="basic-addon2">
+                  <input name="fb-app-id"  type="text" @if($ch->getParam('APP_ID')) value="{{$ch->getParam('APP_ID')}}" @endif  class="form-control" placeholder="Facebook App ID" aria-describedby="basic-addon2">
                   <span class="input-group-addon" id="basic-addon2">APP ID</span>
                 </div>
             </div>
@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <div class="input-group">
-                  <input name="fb-app-secret" type="password" class="form-control" placeholder="Facebook App Secret" aria-describedby="basic-addon2">
+                  <input name="fb-app-secret" @if($ch->getParam('APP_SECRET')) value="{{$ch->getParam('APP_SECRET')}}" @endif  type="password" class="form-control" placeholder="Facebook App Secret" aria-describedby="basic-addon2">
                   <span class="input-group-addon" id="basic-addon2">APP SECRET</span>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                                           $('#aj-loader').remove();
 
                                           if(req.url){
-                                            window.location.href(req.url);
+                                            window.location.href=req.url;
                                           }
 
 
