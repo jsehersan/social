@@ -68,27 +68,32 @@ class ConfigController extends BaseController {
 
 
     public function  getConfigChannel($id){
-
-        session_start();
+       session_start();
        $ch=Helper::getChannel($id);
-       if (!$ch){return "Canal no encontrado";}
-       if (Input::get('code')){
-           FacebookSession::setDefaultApplication($ch->getParam('APP_ID'),$ch->getParam('APP_SECRET'));
-           $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id));
-           $session=$helper->getSessionFromRedirect();
-           $request = new FacebookRequest($session, 'GET', '/me/accounts?fields=access_token');
-           $pageList = $request->execute()
-               ->getGraphObject()->asArray();
+       // FACEBOOK
+        if ($ch->type=='f'){
+            if (!$ch){return "Canal no encontrado";}
+            if (Input::get('code')){
+                FacebookSession::setDefaultApplication($ch->getParam('APP_ID'),$ch->getParam('APP_SECRET'));
+                $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id));
+                $session=$helper->getSessionFromRedirect();
+                if ($session->validate())
+                {
+                    $request = new FacebookRequest($session, 'GET', '/me/accounts?fields=access_token');
+                    $pageList = $request->execute()
+                        ->getGraphObject()->asArray();
+                    $ch->setParam('TOKEN',$token=$pageList['data'][0]->access_token);
+                }
+                return Redirect::to('social/config/channel/'.$id);
+            }
 
 
+            if ($ch->getParam('TOKEN')){
+               $ch->getTokenInfo();
+            }
+        }
+       // !!
 
-           $ch->setParam('TOKEN',$token=$pageList['data'][0]->access_token);
-       }
-
-
-       if ($ch->getParam('TOKEN')){
-           $ch->getProfileUser();
-       }
        return View::make('social::configChannel',
         compact(
           'ch'
@@ -114,7 +119,10 @@ class ConfigController extends BaseController {
         {
             FacebookSession::setDefaultApplication($id_app,$secret_app);
             $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id_ch));
-            $url=$helper->getLoginUrl();
+            $params = array(
+                'scope' => 'manage_pages','publish_stream'
+            );
+            $url=$helper->getLoginUrl($params);
             $chDB=Facebook::find($id_ch);
 
             $chDB->setParam('APP_ID',$id_app);

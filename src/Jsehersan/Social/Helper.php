@@ -17,6 +17,7 @@ class Helper {
 	        	case 'f':
 	        		$ch=Facebook::find($id);
 	        		if ($ch){
+                        $ch->setSession();
 	        			return $ch;
 	        		}	return false;
 	        		

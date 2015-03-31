@@ -1,5 +1,6 @@
 
 <div class="row cfg-facebook">
+        <h2>@if($ch->validate()) <i class="fa fa-circle" style="color:greenyellow;"></i>Online @else <i class="fa fa-circle" style="color:orangered;"></i>Offline @endif</h2>
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <div class="input-group">
