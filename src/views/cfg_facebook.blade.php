@@ -21,6 +21,10 @@
 		    <div class="col-md-2">
 		        <button id="valida-id-secret" class="btn sample btn-sample btn-morado">Autorizar</button>
 		    </div>
+		    <div class="col-md-1">
+		        <a id="valida-id-secret" href="{{URL::to('social/config/test?id_channel='.$ch->id)}}" class="btn  btn-warning">Probar</a>
+
+		    </div>
 		</div>
 </div>
 

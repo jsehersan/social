@@ -6,6 +6,8 @@ Route::post('social/aj/validapp','Jsehersan\Social\Controllers\ConfigController@
 Route::get('social/aj/validapp','Jsehersan\Social\Controllers\ConfigController@ajfb_ValidApp');
 
 Route::post('social/config/newChannel','Jsehersan\Social\Controllers\ConfigController@postNewChannel');
+    // TEST
+Route::get('social/config/test','Jsehersan\Social\Controllers\ConfigController@getTest');
 
 Route::get('social','Jsehersan\Social\Controllers\HomeController@getIndex');
 Route::get('social/config','Jsehersan\Social\Controllers\ConfigController@getIndex');

@@ -89,7 +89,7 @@ class ConfigController extends BaseController {
 
 
             if ($ch->getParam('TOKEN')){
-               $ch->getTokenInfo();
+              // $ch->getTokenInfo();
             }
         }
        // !!
@@ -100,6 +100,15 @@ class ConfigController extends BaseController {
         ));
 
     }
+    public function getTest(){
+
+        if (Input::get('id_channel')){
+            $fb=Facebook::find(Input::get('id_channel'));
+            Helper::dd($fb->getTokenInfo());
+            return Input::get('id_channel');
+        }
+    }
+
     public function ajSaveDesChannel(){
       $ch=Channel::find(Input::get('id_ch'));
       $ch->description=Input::get('description');

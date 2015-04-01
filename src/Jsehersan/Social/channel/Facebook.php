@@ -47,7 +47,7 @@ use Facebook\FacebookSDKException;
         FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
          $session = new FacebookSession($this->getParam('TOKEN'));
             $accessTokenInfo = $accessToken->getInfo();
-            $page_post = (new FacebookRequest( $session, 'POST', '/'. $this->getParam('APP_ID') .'/feed', array(
+            $page_post = (new FacebookRequest( $session, 'POST', '/'.$this->getParam('APP_ID').'/feed', array(
                 'access_token' => $this->getParam('TOKEN'),
                 'name' => 'Facebook API: Posting As A Page using Graph API v2.x and PHP SDK 4.0.x',
                 'link' => 'https://www.webniraj.com/2014/08/23/facebook-api-posting-as-a-page-using-graph-api-v2-x-and-php-sdk-4-0-x/',
