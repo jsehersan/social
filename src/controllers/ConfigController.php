@@ -103,7 +103,7 @@ class ConfigController extends BaseController {
     public function getTest(){
 
         if (Input::get('id_channel')){
-            $fb=Facebook::find(Input::get('id_channel'));
+            $fb=Helper::getChannel(Input::get('id_channel'));
             Helper::dd($fb->getTokenInfo());
             return Input::get('id_channel');
         }
@@ -122,6 +122,7 @@ class ConfigController extends BaseController {
         $id_app=Input::get('id_app');
         $secret_app=Input::get('secret_app');
         $id_ch=Input::get('id_ch');
+        $page_id=Input::get('page_id');
 
 
         try
@@ -129,16 +130,19 @@ class ConfigController extends BaseController {
             FacebookSession::setDefaultApplication($id_app,$secret_app);
             $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id_ch));
             $params = array(
-                'scope' => 'manage_pages','publish_stream'
+                'scope' => 'manage_pages','publish_stream','publish_actions'
             );
             $url=$helper->getLoginUrl($params);
             $chDB=Facebook::find($id_ch);
 
             $chDB->setParam('APP_ID',$id_app);
             $chDB->setParam('APP_SECRET',$secret_app);
+            $chDB->setParam('PAGE_ID',$page_id);
+            $ch_status=$chDB->validate();
             return Response::json(array(
                 'status'=>true,
-                'url' => $url
+                'url' => $url,
+                'ch_status' => $ch_status
             ));
         }
         catch(FacebookSDKException $ex)
@@ -149,10 +153,6 @@ class ConfigController extends BaseController {
                'error' => $ex
            ));
         }
-
-
-
-
 
 
        // return Response::json($helper->getLoginUrl());

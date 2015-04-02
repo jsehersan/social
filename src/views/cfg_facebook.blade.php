@@ -17,6 +17,14 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+                    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+                        <div class="input-group">
+                          <input name="fb-page-id" @if($ch->getParam('PAGE_ID')) value="{{$ch->getParam('PAGE_ID')}}" @endif  type="text" class="form-control" placeholder="Facebook Page ID" aria-describedby="basic-addon2">
+                          <span class="input-group-addon" id="basic-addon2">PAGE ID</span>
+                        </div>
+                    </div>
+                </div>
 		<div class="row">
 		    <div class="col-md-2">
 		        <button id="valida-id-secret" class="btn sample btn-sample btn-morado">Autorizar</button>
@@ -33,11 +41,12 @@
     <script>
           $(document).ready(function(){
                 //Validar app y secret
-                function validApp(id,secret,id_ch){
+                function validApp(id,secret,id_ch,page_id){
                         var data = {
                             id_app:id ,
                             secret_app:secret,
-                            id_ch:id_ch
+                            id_ch:id_ch,
+                            page_id:page_id
                         }
 
                         var url=url_aj+'/validapp';
@@ -53,12 +62,10 @@
                                  success : function (req){
                                           $('#aj-loader').remove();
 
-                                          if(req.url){
+                                          // Si el canal no ha sido validado aun y tenemos url para login redirige
+                                          if(!req.ch_status && req.url){
                                             window.location.href=req.url;
                                           }
-
-
-
                                           console.log(req);
 
                                           },
@@ -75,7 +82,8 @@
                     id=$('input[name="fb-app-id"]').val();
                     secret=$('input[name="fb-app-secret"]').val();
                     id_ch=$('input[name="id_ch"]').val();
-                    validApp(id,secret,id_ch);
+                    page_id=$('input[name="fb-page-id"]').val();
+                    validApp(id,secret,id_ch,page_id);
                 });
 
 

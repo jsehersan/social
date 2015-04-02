@@ -25,14 +25,16 @@ use Facebook\FacebookSDKException;
 
 	public $tmp_config="cfg_facebook";
 
-    private $session=null;
+    public $session=null;
+
+
 
     public function  setSession(){
 
-//        if ($this->getParam('TOKEN')){
-//            $this->session=new FacebookSession($this->getParam('TOKEN'));
-//            var_dump($this->session);
-//        }
+        if ($this->getParam('TOKEN')){
+            FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
+            $this->session=new FacebookSession($this->getParam('TOKEN'));
+        }
     }
     public function getTokenInfo(){
 
@@ -44,27 +46,31 @@ use Facebook\FacebookSDKException;
             // Get info about the token
             // Returns a GraphSessionInfo object
 
-        FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
-         $session = new FacebookSession($this->getParam('TOKEN'));
-            $accessTokenInfo = $accessToken->getInfo();
-            $page_post = (new FacebookRequest( $session, 'POST', '/'.$this->getParam('APP_ID').'/feed', array(
+       // FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
+         //$session = new FacebookSession($this->getParam('TOKEN'));
+
+
+            $page_post = (new FacebookRequest($this->session, 'POST', '/'.$this->getParam('PAGE_ID').'/feed', array(
                 'access_token' => $this->getParam('TOKEN'),
-                'name' => 'Facebook API: Posting As A Page using Graph API v2.x and PHP SDK 4.0.x',
-                'link' => 'https://www.webniraj.com/2014/08/23/facebook-api-posting-as-a-page-using-graph-api-v2-x-and-php-sdk-4-0-x/',
-                'caption' => 'The Facebook API lets you post to Pages you administrate via the API. This tutorial shows you how to achieve this using the Facebook PHP SDK v4.0.x and Graph API 2.x.',
-                'message' => 'Check out my new blog post!',
+                'name' => 'Post de prueba desde laravel',
+                'link' => 'http://cetait.com',
+                'description' => 'Hola mundo desde laravel',
+                'picture' => 'http://alzovuelo.com/front/images/Vuelos_avion_s.jpg',
+                'message' => 'Ya queda menos',
             ) ))->execute()->getGraphObject()->asArray();
 
 // return post_id
             print_r( $page_post );
 
         } catch(FacebookSDKException $e) {
+            var_dump($this->getParam('TOKEN'));
             echo 'Error getting access token info: ' . $e->getMessage();
+           // var_dump($e);
             exit;
         }
 
 // Dump the info about the token
-        var_dump($accessTokenInfo->asArray());
+       // var_dump($accessTokenInfo->asArray());
 
 //        FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
 //        $session = new FacebookSession($this->getParam('TOKEN'));
