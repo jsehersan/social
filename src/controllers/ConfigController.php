@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 
 use Jsehersan\Social\channel\Facebook;
 
@@ -93,10 +94,13 @@ class ConfigController extends BaseController {
             }
         }
        // !!
-
+       $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
        return View::make('social::configChannel',
         compact(
-          'ch'
+          'ch', 'tmp'
         ));
 
     }

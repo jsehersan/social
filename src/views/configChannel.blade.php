@@ -1,7 +1,8 @@
 <?php  use Jsehersan\Social\Helper; ?>
-@extends('social::layout.base')
 
-@section('main')
+@extends($tmp['extends'])
+
+@section($tmp['section_main'])
 	<style type="text/css">
 	.row{
 		margin-top: 20px;
