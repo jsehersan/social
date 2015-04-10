@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Jsehersan\Social\channel\Facebook;
 use Channel;
+use Post;
 use Jsehersan\Social\Helper;
 class HomeController extends BaseController {
     /*
@@ -55,5 +56,20 @@ class HomeController extends BaseController {
              ));
      }
 
+    public function getPublications(){
+         $post=Post::all();
+         $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
+          $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Publicaciones</small>'
+            );
+         return View::make('social::listPublications',
+             compact(
+                 'post','tmp','header_title'
+             ));
+    }
 
 }

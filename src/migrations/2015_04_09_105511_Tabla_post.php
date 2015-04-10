@@ -18,7 +18,7 @@ class TablaPost extends Migration {
 			//
             $table->increments('id');
             $table->tinyInteger('id_item');
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(0);
             $table->tinyInteger('channel_id');
             $table->string('type_item',150);
             $table->string('title',250);

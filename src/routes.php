@@ -25,4 +25,8 @@
                 Route::get('social/config/channel/{id}',
                     array('as' => 'configChannel',
                         'uses' => 'Jsehersan\Social\Controllers\ConfigController@getConfigChannel'));
+
+
+                //Publicaciones
+                Route::get('social/publications','Jsehersan\Social\Controllers\HomeController@getPublications');
             });
