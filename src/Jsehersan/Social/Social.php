@@ -6,23 +6,18 @@ namespace Jsehersan\Social;
 use Illuminate\Support\Facades\View;
 use Jsehersan\Social\channel\Facebook;
 
+
 class Social
 {
 
-    public function hola($data)
+    public function Channel()
     {
-
-       // Facebook::holaface();
-        $datauser=$data;
-        return View::make('social::newChannel',compact('datauser'));
-
+        return new \Channel();
     }
 
-    public function vistas()
+     public function Post()
     {
-
-        return View::make('saludo::hola');
-
+        return new \Post();
     }
 }
 

@@ -42,10 +42,21 @@ class ConfigController extends BaseController {
 
 
    // protected $layout = 'test';
-    public function getIndex()
+    public function getNewChannel()
     {
-
-      return View::make('social::newChannel');
+       $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
+        $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Nuevo Canal</small>'
+            );
+      return View::make('social::newChannel',
+          compact(
+              'tmp',
+              'header_title'
+          ));
 
     }
 
@@ -66,6 +77,15 @@ class ConfigController extends BaseController {
         }
 
      }
+    //App ceta
+    // id 517720631710231
+    // secret f73600884be8ae97e9b6f57decd94461
+
+    // app test
+    // 1498581137039740
+   // secret 7ecf76e159157e5a7f594459e4cf3d46
+
+    //bar 238874002988010
 
 
     public function  getConfigChannel($id){
@@ -80,12 +100,24 @@ class ConfigController extends BaseController {
                 $session=$helper->getSessionFromRedirect();
                 if ($session->validate())
                 {
-                    $request = new FacebookRequest($session, 'GET', '/me/accounts?fields=access_token');
+                    $request = new FacebookRequest($session, 'GET', '/me/accounts?fields=name,access_token,perms');
                     $pageList = $request->execute()
                         ->getGraphObject()->asArray();
-                    $ch->setParam('TOKEN',$token=$pageList['data'][0]->access_token);
+                    if ($ch->getParam('PAGE_ID')){
+                        //Comprobamos que la pagina que hemos introducido esta entre las que administra el usuario
+                        $page=Facebook::checkIdPage($ch->getParam('PAGE_ID'),$pageList['data']);
+                        if($page){
+                             $ch->setParam('TOKEN',$page->access_token);
+                             $ch->setParam('PAGE_NAME',$page->name);
+                             return Redirect::to('social/config/channel/'.$id)->with('message','Canal configurado con exito , Página '.$page->name);
+                        }
+
+
+                    }
+                        return Redirect::to('social/config/channel/'.$id)->with('error','Debe introducir el id de la pagina con la cuel quiere publicar');
+
                 }
-                return Redirect::to('social/config/channel/'.$id);
+
             }
 
 
@@ -98,18 +130,22 @@ class ConfigController extends BaseController {
            'extends' => Config::get('social::social.tmp.admin','layout.base'),
            'section_main' => Config::get('social::social.tmp.section_main','main')
        );
+       $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Config::'.$ch->description.'</small>'
+            );
        return View::make('social::configChannel',
         compact(
-          'ch', 'tmp'
+          'ch', 'tmp','header_title'
         ));
 
     }
     public function getTest(){
 
         if (Input::get('id_channel')){
-            $fb=Helper::getChannel(Input::get('id_channel'));
-            Helper::dd($fb->getTokenInfo());
-            return Input::get('id_channel');
+
+             $ch=Helper::getChannel(Input::get('id_channel'));
+             return $ch->getTest();
         }
     }
 
@@ -134,7 +170,7 @@ class ConfigController extends BaseController {
             FacebookSession::setDefaultApplication($id_app,$secret_app);
             $helper = new FacebookRedirectLoginHelper(URL::to('social/config/channel/'.$id_ch));
             $params = array(
-                'scope' => 'manage_pages','publish_stream','publish_actions'
+                'scope' => 'manage_pages','publish_actions','publish_stream','publish_pages'
             );
             $url=$helper->getLoginUrl($params);
             $chDB=Facebook::find($id_ch);
@@ -170,6 +206,15 @@ class ConfigController extends BaseController {
           }
         }
 
+    }
+    public function  getLimpiaParams (){
+         if (Input::get('id_channel')){
+             $ch=Channel::find(Input::get('id_channel'));
+             $ch->params="";
+             if($ch->save()){
+                  return Redirect::back()->with('message','Canal limpiado correctamente');
+             }
+        }
     }
 
 }

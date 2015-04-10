@@ -5,6 +5,8 @@
  * Date: 14/03/2015
  * Time: 16:23
  */
+use Facebook\FacebookClientException;
+use Facebook\FacebookPermissionException;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphObject;
@@ -19,7 +21,8 @@ use Facebook\FacebookSDKException;
 
 
  use Channel;
- use Jsehersan\Social\Helper;
+use Jsehersan\Social\ChannelInterface;
+use Jsehersan\Social\Helper;
 
  class Facebook extends Channel{
 
@@ -36,20 +39,14 @@ use Facebook\FacebookSDKException;
             $this->session=new FacebookSession($this->getParam('TOKEN'));
         }
     }
-    public function getTokenInfo(){
+    public function getTest(){
 
-//        FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
-//        $session = new FacebookSession($this->getParam('TOKEN'));
-        $accessToken = new AccessToken($this->getParam('TOKEN'));
-
+   //$accessToken = new AccessToken($this->getParam('TOKEN'));
         try {
             // Get info about the token
             // Returns a GraphSessionInfo object
-
        // FacebookSession::setDefaultApplication($this->getParam('APP_ID'),$this->getParam('APP_SECRET'));
          //$session = new FacebookSession($this->getParam('TOKEN'));
-
-
             $page_post = (new FacebookRequest($this->session, 'POST', '/'.$this->getParam('PAGE_ID').'/feed', array(
                 'access_token' => $this->getParam('TOKEN'),
                 'name' => 'Post de prueba desde laravel',
@@ -58,10 +55,8 @@ use Facebook\FacebookSDKException;
                 'picture' => 'http://alzovuelo.com/front/images/Vuelos_avion_s.jpg',
                 'message' => 'Ya queda menos',
             ) ))->execute()->getGraphObject()->asArray();
-
 // return post_id
             print_r( $page_post );
-
         } catch(FacebookSDKException $e) {
             var_dump($this->getParam('TOKEN'));
             echo 'Error getting access token info: ' . $e->getMessage();
@@ -101,7 +96,6 @@ use Facebook\FacebookSDKException;
 
 
 
-
     }
 
     public function validate(){
@@ -115,8 +109,21 @@ use Facebook\FacebookSDKException;
         }
             return true;
     }
-
+    public function getToken(){
+            $request = new FacebookRequest($this->session, 'GET', '/me/accounts?fields=access_token');
+            $pageList = $request->execute()
+            ->getGraphObject()->asArray();
+            $this->setParam('TOKEN',$token=$pageList['data'][0]->access_token);
+    }
     public function test(){
+
+    }
+    public static function checkIdPage($idpage,$data){
+        foreach ($data as $d){
+            if ($d->id==$idpage){
+                return $d;
+            }
+        }return false;
 
     }
 }

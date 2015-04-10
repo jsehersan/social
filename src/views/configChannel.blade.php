@@ -1,7 +1,16 @@
 <?php  use Jsehersan\Social\Helper; ?>
 
-@extends($tmp['extends'])
+@extends('social::layout.base')
 
+@section('opc-header')
+<div class="ceta-opc-header">
+ <ul>
+    <li><a id="lista" href="{{URL::to('social/channels')}}" style="color: #01B7F2"><i class="fa fa-list-alt"></i><p>Listado</p></a></li>
+
+    <li>    <a id="nuevo" href="{{URL::to('social/channel/new')}}" style="color: #FDB714"><i class="fa fa-plus-square-o"></i><p>Nuevo</p></a></li>
+ </ul>
+</div>
+@stop
 @section($tmp['section_main'])
 	<style type="text/css">
 	.row{

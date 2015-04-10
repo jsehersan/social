@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
 use Jsehersan\Social\channel\Facebook;
 use Channel;
 use Jsehersan\Social\Helper;
@@ -39,21 +40,20 @@ class HomeController extends BaseController {
     
      public function getChannels() {
 
-         $channels=Channel::all();
+         $channels=Channel::allChannels();
+         $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
+          $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Canales</small>'
+            );
          return View::make('social::listChannels',
              compact(
-                 'channels'
+                 'channels','tmp','header_title'
              ));
      }
-    public function  getEmpresa(){
 
-        return $this->layout->content = View::make('front.empresa');
-
-    }
-     public function  getMantenimiento(){
-
-        return $this->layout->content = View::make('mantenimiento.index');
-
-    }
 
 }

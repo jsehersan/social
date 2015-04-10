@@ -8,6 +8,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Jsehersan\Social\Helper;
+use Jsehersan\Social;
 class Channel extends Model
 
 {
@@ -31,6 +32,17 @@ class Channel extends Model
         if (isset($pr[$nombre])){
             return $pr[$nombre];
         }   return false;
+    }
+    public static function allChannels(){
+        $ch=self::all();
+        $all=array();
+        foreach ($ch as $c){
+            $fch=Helper::getChannel($c->id);
+            if($fch){
+                $all[]=$fch;
+            }
+        }
+        return $all;
     }
 
 

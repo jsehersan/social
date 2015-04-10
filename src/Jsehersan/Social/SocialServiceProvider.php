@@ -35,6 +35,7 @@ class SocialServiceProvider extends ServiceProvider {
             return new Social;
         });
         require __DIR__.'/../../routes.php';
+        require __DIR__.'/../../filters.php';
 	}
 
 	/**

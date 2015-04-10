@@ -1,20 +1,23 @@
 @extends('social::layout.base')
 
-@section('main')
-	<style type="text/css">
-	.row{
-		margin-top: 20px;
-	}
-	</style>
-	<div class="progress">
-  <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
-    Select type channel
-  </div>
+@section('opc-header')
+
+<div class="ceta-opc-header">
+    <a id="lista" href="{{URL::to('social/channels')}}" style="color: #01B7F2"><i class="fa fa-list-alt"></i><p>Listado</p></a>
 </div>
+@stop
+
+@section($tmp['section_main'])
+	<style type="text/css">
+	/*.row{*/
+		/*margin-top: 20px;*/
+	/*}*/
+	</style>
+
  	{{Form::open(array('url'=>URL::to('social/config/newChannel'),'method'=>'post'))}}
 	<div class="row">
 		<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-			<h3>New Channel</h3>
+			{{--<h3>New Channel</h3>--}}
 		</div>
 		<div style="text-align:center;margin-top:15px;" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 			<select name="type-channel" id="inputType-Channel" class="form-control" required="required">

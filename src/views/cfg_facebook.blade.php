@@ -1,6 +1,13 @@
 
 <div class="row cfg-facebook">
-        <h2>@if($ch->validate()) <i class="fa fa-circle" style="color:greenyellow;"></i>Online @else <i class="fa fa-circle" style="color:orangered;"></i>Offline @endif</h2>
+        <div class="row">
+           <div class="col-md-2">
+               <h5>@if($ch->validate()) <i class="fa fa-circle" style="color:limegreen;"></i> Online @else <i class="fa fa-circle" style="color:orangered;"></i>Offline @endif</h5>
+           </div>
+           <div class="col-md-8">
+             @if ($ch->getParam('PAGE_NAME')) <h4 class="pull-right"><i class="fa fa-comments-o"></i> {{$ch->getParam('PAGE_NAME')}}</h4>@endif
+           </div>
+        </div>
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <div class="input-group">
@@ -29,17 +36,19 @@
 		    <div class="col-md-2">
 		        <button id="valida-id-secret" class="btn sample btn-sample btn-morado">Autorizar</button>
 		    </div>
-		    <div class="col-md-1">
+		    <div class="col-md-4">
+		        <a href="{{URL::to('social/config/channel/limpia?id_channel='.$ch->id)}}" class="btn btn-danger">Limpiar</a>
 		        <a id="valida-id-secret" href="{{URL::to('social/config/test?id_channel='.$ch->id)}}" class="btn  btn-warning">Probar</a>
-
 		    </div>
+
 		</div>
+
 </div>
 
 @section('js')
 @parent
     <script>
-          $(document).ready(function(){
+          jQuery(document).ready(function(){
                 //Validar app y secret
                 function validApp(id,secret,id_ch,page_id){
                         var data = {
