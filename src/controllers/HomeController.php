@@ -72,4 +72,25 @@ class HomeController extends BaseController {
              ));
     }
 
+     public function getPublication($id){
+
+         $post=Post::findOrFail($id);
+         if (!$post){
+             return "Post no encontrado";
+         }
+
+         $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
+          $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Publicacion: '.$post->title.'</small>'
+            );
+         return View::make('social::publicationDet',
+             compact(
+                 'post','tmp','header_title'
+             ));
+    }
+
 }

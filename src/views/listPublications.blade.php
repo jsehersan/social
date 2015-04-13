@@ -30,7 +30,9 @@
         <td>{{$p->title}}</td>
         <td>{{$p->type_item}}</td>
         <td>{{$p->getStatus()}}</td>
-        <td></td>
+        <td>
+        <a title="Detalle" href="{{URL::to('social/publication/'.$p->id)}}"><i class="fa fa-external-link-square ceta-acciones-icon"></i></a>
+        </td>
         {{--<td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a data-title="Edit"  href="{{URL::to('social/config/channel/'.$ch->id)}}" ><i class="fa fa-pencil-square-o ceta-acciones-icon"></i></a></p></td>--}}
         {{--<td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="javaScript::void(0)" onclick="borra({{$ch->id}})"  data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash-o ceta-acciones-icon"></i></a></p></td>--}}
     </tr>

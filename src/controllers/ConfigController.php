@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Config;
 
 use Jsehersan\Social\channel\Facebook;
 
-
+use Option;
 use Channel;
 use Jsehersan\Social\Helper;
 
@@ -217,4 +217,27 @@ class ConfigController extends BaseController {
         }
     }
 
+    public function getConfig(){
+        $tmp=array(
+           'extends' => Config::get('social::social.tmp.admin','layout.base'),
+           'section_main' => Config::get('social::social.tmp.section_main','main')
+       );
+        $header_title=array(
+            'clase'=>'fa fa-share-alt',
+            'titulo'=>'Social <small>Config</small>'
+            );
+        $opciones=Option::all();
+        $channels=Channel::all();
+      return View::make('social::config',
+          compact(
+              'tmp',
+              'header_title',
+              'opciones',
+              'channels'
+          ));
+    }
+    public function setConfig(){
+        $actualizados=Option::saveItem();
+        return Redirect::back()->with('message','Actualizados '.$actualizados.' campos');
+    }
 }
