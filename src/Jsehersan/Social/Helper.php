@@ -7,6 +7,8 @@
  */
 use Jsehersan\Social\Channel\Facebook;
 use Channel;
+use Jsehersan\Social\Channel\Twitter;
+
 class Helper {
 
     public static function getChannel ($id){
@@ -21,6 +23,13 @@ class Helper {
 	        			return $ch;
 	        		}	return false;
 	        		
+	        		break;
+                case 't':
+	        		$ch=Twitter::find($id);
+	        		if ($ch){
+	        			return $ch;
+	        		}	return false;
+
 	        		break;
 	        	
 	        	default:

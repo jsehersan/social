@@ -33,10 +33,12 @@
         <td><input type="checkbox" class="checkthis" /></td>
         <td>@if($ch->validate()) <i class="fa fa-circle" style="color:limegreen;"></i> Online @else <i class="fa fa-circle" style="color:orangered;"></i> Offline @endif</td>
         <td>{{$ch->description}}</td>
-        <td>@if($ch->type=='f'){{HTML::Image(Helper::asset('img/icon_face.png'),'facebook',array('width'=>'25'))}} @endif</td>
+        <td>@if($ch->type=='f')<i style="color:#3b5998"class="fa fa-facebook-official fa-2x"></i>
+				@elseif($ch->type=='t')<i style="color:#55acee" class="fa fa-twitter-square fa-2x"></i>
+				@endif</td>
         <td>@if($ch->getParam('PAGE_NAME')){{$ch->getParam('PAGE_NAME')}}@endif</td>
         <td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a data-title="Edit"  href="{{URL::to('social/config/channel/'.$ch->id)}}" ><i class="fa fa-pencil-square-o ceta-acciones-icon"></i></a></p></td>
-        <td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="javaScript::void(0)" onclick="borra({{$ch->id}})"  data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash-o ceta-acciones-icon"></i></a></p></td>
+        <td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="javaScript:void(0)" onclick="borra({{$ch->id}})"  data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash-o ceta-acciones-icon"></i></a></p></td>
     </tr>
   @endforeach
 

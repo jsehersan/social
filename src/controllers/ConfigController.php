@@ -1,5 +1,6 @@
 <?php namespace Jsehersan\Social\Controllers;
 
+use Aws\CloudFront\Exception\Exception;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
 use Facebook\GraphObject;
@@ -11,6 +12,7 @@ use Facebook\FacebookCanvasLoginHelper;
 
 use Facebook\FacebookSDKException;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
@@ -19,12 +21,16 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\File;
 
 use Jsehersan\Social\channel\Facebook;
 
+
+use Jsehersan\Social\Facades\Social;
 use Option;
 use Channel;
 use Jsehersan\Social\Helper;
+
 
 class ConfigController extends BaseController {
     /*
@@ -126,6 +132,27 @@ class ConfigController extends BaseController {
             }
         }
        // !!
+
+       // TWITTER
+       if ($ch->type=='t'){
+
+//          try{
+//
+//           // $res = file_get_contents('http://tinyurl.com/api-create.php?url=http://stackoverflow.com/questions/22355828/doing-http-requests-from-laravel-to-an-external-api');
+//            //$uploaded_media = Social::Twitter()->uploadMedia(['media' => File::get(public_path('front/images/vilca_logo4.png'))]);
+//            //$res=Social::Twitter()->postTweet(['status' => ' defg  ,jh efg  ,jh  defg  ,jh  defg   defg  ,jh  defg  ,jh  defg  ,j fin '.$res, 'media_ids' => $uploaded_media->media_id_string]);;
+//          //  var_dump( Social::Twitter()->getUserTimeline(['screen_name' => 'thujohn', 'count' => 1, 'format' => 'json'])
+//          );
+//          }catch (\Exception $e){
+//
+//              return Redirect::back()->with('error',$e->getMessage());
+//          }
+
+       // $cfg_tw=Config::get('social.twitter');
+
+       }
+
+
        $tmp=array(
            'extends' => Config::get('social::social.tmp.admin','layout.base'),
            'section_main' => Config::get('social::social.tmp.section_main','main')

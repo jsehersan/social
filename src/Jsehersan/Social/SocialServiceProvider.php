@@ -1,6 +1,9 @@
 <?php namespace Jsehersan\Social;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Config;
+use Thujohn\Twitter\Twitter;
 
 class SocialServiceProvider extends ServiceProvider {
 
@@ -36,6 +39,12 @@ class SocialServiceProvider extends ServiceProvider {
         });
         require __DIR__.'/../../routes.php';
         require __DIR__.'/../../filters.php';
+        // Registramos el componente de twitter
+        App::register('Thujohn\Twitter\TwitterServiceProvider');
+        $this->app->bind('SocialTw', function($app)
+        {
+            return new Twitter(Config::get('social::twitter'), $app['session.store']);
+        });
 	}
 
 	/**

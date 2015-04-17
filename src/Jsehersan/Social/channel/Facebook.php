@@ -5,24 +5,12 @@
  * Date: 14/03/2015
  * Time: 16:23
  */
-use Facebook\FacebookClientException;
-use Facebook\FacebookPermissionException;
+
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
-use Facebook\GraphObject;
-use Facebook\FacebookRequestException;
-use Facebook\FacebookRedirectLoginHelper;
-use Facebook\FacebookResponse;
-use Facebook\GraphUser;
-use Facebook\FacebookCanvasLoginHelper;
-
-use Facebook\Entities\AccessToken;
 use Facebook\FacebookSDKException;
-
-
- use Channel;
+use Channel;
 use Jsehersan\Social\ChannelInterface;
-use Jsehersan\Social\Helper;
 
  class Facebook extends Channel{
 
@@ -115,15 +103,31 @@ use Jsehersan\Social\Helper;
             ->getGraphObject()->asArray();
             $this->setParam('TOKEN',$token=$pageList['data'][0]->access_token);
     }
-    public function test(){
 
-    }
     public static function checkIdPage($idpage,$data){
         foreach ($data as $d){
             if ($d->id==$idpage){
                 return $d;
             }
         }return false;
+
+    }
+    public function publish($data){
+         try {
+            $page_post = (new FacebookRequest($this->session, 'POST', '/'.$this->getParam('PAGE_ID').'/feed', array(
+//                'access_token' => $this->getParam('TOKEN')',
+                'name' => $data['name'],
+                'link' =>  $data['link'],
+                'description' =>  $data['description'],
+                'picture' => $data['picture'],
+//                'message' => $data['message'],
+            ) ))->execute()->getGraphObject()->asArray();
+             return array('status'=>$page_post['id']);
+
+        } catch(FacebookSDKException $e) {
+            return array('status'=>false,'error'=>$e->getMessage());
+
+        }
 
     }
 }

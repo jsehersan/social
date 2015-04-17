@@ -33,5 +33,6 @@
                 //Publicaciones
                 Route::get('social/publications','Jsehersan\Social\Controllers\HomeController@getPublications');
                 Route::get('social/publication/{id}','Jsehersan\Social\Controllers\HomeController@getPublication');
+                Route::get('social/publication/publish/{id}','Jsehersan\Social\Controllers\PublicationsController@setPublish');
 
             });

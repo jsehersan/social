@@ -29,6 +29,29 @@ class Post extends Model
         return "Desconocido";
     }
 
+    public function channel(){
+        return Helper::getChannel($this->channel_id);
+    }
 
+     public function sortUrl(){
+        $res = file_get_contents('http://tinyurl.com/api-create.php?url='.$this->link);
+        return $res;
+    }
+    public function findItem($id_item,$type_item,$ch_id){
+        $res=self::where('id_item',$id_item)
+            ->where('type_item',$type_item)
+            ->where('channel_id',$ch_id)
+            ->first();
+        if ($res){
 
+            return $res;
+        }   return false;
+
+    }
+    public function scopeStatus($query,$status){
+            if ($status!='all'&& trim($status)!=''){
+                $query->where('status',$status);
+            }
+
+    }
 }

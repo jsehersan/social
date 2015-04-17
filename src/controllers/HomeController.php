@@ -1,11 +1,13 @@
 <?php namespace Jsehersan\Social\Controllers;
 
+
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Config;
 use Jsehersan\Social\channel\Facebook;
 use Channel;
@@ -57,7 +59,12 @@ class HomeController extends BaseController {
      }
 
     public function getPublications(){
-         $post=Post::all();
+
+         $post=Post::
+             status(Request::get('filter'))
+             ->paginate(20)
+             ->appends(Request::only(['filter']));
+
          $tmp=array(
            'extends' => Config::get('social::social.tmp.admin','layout.base'),
            'section_main' => Config::get('social::social.tmp.section_main','main')
@@ -78,7 +85,7 @@ class HomeController extends BaseController {
          if (!$post){
              return "Post no encontrado";
          }
-
+            
          $tmp=array(
            'extends' => Config::get('social::social.tmp.admin','layout.base'),
            'section_main' => Config::get('social::social.tmp.section_main','main')

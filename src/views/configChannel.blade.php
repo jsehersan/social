@@ -28,7 +28,9 @@
 				</div>
 				<div style="text-align:center;margin-top:15px;" class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 
-				@if($ch->type=='f'){{HTML::Image(Helper::asset('img/icon_face.png'),'facebook',array('width'=>'50'))}} @endif
+				@if($ch->type=='f')<i style="color:#3b5998"class="fa fa-facebook-official fa-3x"></i>
+				@elseif($ch->type=='t')<i style="color:#55acee" class="fa fa-twitter-square fa-3x"></i>
+				@endif
 
 				</div>
 			</div>

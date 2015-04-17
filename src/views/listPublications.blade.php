@@ -5,7 +5,23 @@
 
 
 @section($tmp['section_main'])
+    <div class="row">
+    {{Form::open(array('method' => 'get')) }}
+    <div class="col-md-1 pull-right">
+        <button class="btn btn-mini">Filtrar</button>
+     </div>
 
+     <div class="col-md-3 pull-right">
+
+        <select name="filter" class="form-control">
+            <option {{{ (Request::get('filter')==0 ? 'selected' : '') }}} value="0">Pendientes</option>
+            <option {{{ (Request::get('filter')==5 ? 'selected' : '') }}} value="5">Fallidos</option>
+            <option {{{ (Request::get('filter')==1 ? 'selected' : '') }}} value="1">Publicados</option>
+            <option {{{ (Request::get('filter')=='all' ? 'selected' : '') }}} value="all">Todos</option>
+        </select>
+     </div>
+     {{Form::close()}}
+    </div>
 	<div class="row">
         <div class="col-md-12">
         <div class="table-responsive">
@@ -19,6 +35,7 @@
                    <th>Titulo</th>
                    <th>Tipo</th>
                    <th>Estado</th>
+                   <th>Canal</th>
                    <th>Acciones</th>
                    {{--<th>Edit</th>--}}
                    {{--<th>Delete</th>--}}
@@ -29,9 +46,17 @@
         <td><input type="checkbox" class="checkthis" /></td>
         <td>{{$p->title}}</td>
         <td>{{$p->type_item}}</td>
-        <td>{{$p->getStatus()}}</td>
+        <td><span title="{{$p->result_post}}" class="@if ($p->status==0)naranja @elseif($p->status==1)verde @elseif($p->status==5)rojo @endif">{{$p->getStatus()}}</span></td>
         <td>
-        <a title="Detalle" href="{{URL::to('social/publication/'.$p->id)}}"><i class="fa fa-external-link-square ceta-acciones-icon"></i></a>
+                @if($p->Channel()->type=='f')<i style="color:#3b5998"class="fa fa-facebook-official fa-2x"></i>
+				@elseif($p->Channel()->type=='t')<i style="color:#55acee" class="fa fa-twitter-square fa-2x"></i>
+				@endif
+        </td>
+        <td>
+        <a title="Detalle" class="btn btn-success" href="{{URL::to('social/publication/'.$p->id)}}">Ver</a>
+        @if($p->status!=1)<a title="Detalle" class="btn btn-warning" href="{{URL::to('social/publication/publish/'.$p->id)}}">Publicar</a>@endif
+        {{--<button type="button" class="btn btn-warning">Publicar</button>--}}
+
         </td>
         {{--<td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Edit"><a data-title="Edit"  href="{{URL::to('social/config/channel/'.$ch->id)}}" ><i class="fa fa-pencil-square-o ceta-acciones-icon"></i></a></p></td>--}}
         {{--<td class="col-md-1"><p data-placement="top" data-toggle="tooltip" title="Delete"><a href="javaScript::void(0)" onclick="borra({{$ch->id}})"  data-title="Delete" data-toggle="modal" data-target="#delete" ><i class="fa fa-trash-o ceta-acciones-icon"></i></a></p></td>--}}
@@ -44,7 +69,7 @@
 
 </table>
 
-
+            {{$post->links()}}
             </div>
 
         </div>
