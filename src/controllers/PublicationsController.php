@@ -1,5 +1,6 @@
 <?php namespace Jsehersan\Social\Controllers;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\URL;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\DB;
 use Jsehersan\Social\channel\Facebook;
 use Channel;
 use Jsehersan\Social\Helper;
@@ -32,7 +34,7 @@ class PublicationsController extends BaseController {
         if($post->status==1){
             return Redirect::back()->with('error','Ya ha sido publicado con exito anteriormente');
         }
-        $channel=Helper::getChannel(\Option::getItem('channel','main'));
+        $channel=Helper::getChannel($post->channel_id);
         $data=array(
 
                 'name' => $post->title,
@@ -58,7 +60,15 @@ class PublicationsController extends BaseController {
 
        // die($post->result_status);
     }
-
-
+    //Limpia los post publicados
+    public function cleanPublish(){
+        $affect=\Post::where('status',1)->delete();
+        return Redirect::back()->with('message','Eliminadas '.$affect.' publicaciones');
+    }
+    //Limpia la tabla post
+    public function cleanallPublish(){
+        DB::table('social_post')->truncate();
+        return Redirect::back()->with('message','Tabla publicaciones limpiada');
+    }
 
 }

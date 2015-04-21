@@ -66,7 +66,7 @@ Route::filter('root', function() {
             if (!Auth::user()->acl==3){
                 $fallo[]="No eres ROOT";
                 Session::flash('fallo', $fallo);
-                return Redirect::to(Helpers::getAdminRoute().'/');
+                return Redirect::to('/');
             }
         });
         

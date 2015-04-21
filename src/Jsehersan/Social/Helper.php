@@ -61,4 +61,12 @@ class Helper {
             exit();
         }
     }
+    public static function sortUrl($longUrl){
+         return file_get_contents('http://tinyurl.com/api-create.php?url='.$longUrl);
+    }
+    public static function getInternalImg($img){
+        $url=explode('public_html',$img);
+        return $url[1];
+
+    }
 } 

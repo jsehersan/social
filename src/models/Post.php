@@ -50,7 +50,7 @@ class Post extends Model
     }
     public function scopeStatus($query,$status){
             if ($status!='all'&& trim($status)!=''){
-                $query->where('status',$status);
+                $query->where('status',$status)->orderBy('updated_at','DESC');
             }
 
     }

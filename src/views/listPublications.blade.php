@@ -2,22 +2,25 @@
 @extends ('social::layout.base')
 
 
-
-
 @section($tmp['section_main'])
     <div class="row">
+    <div class="col-md-6">
+        <a href="{{URL::to('social/publications/clean')}}" class="btn btn-mini btn-danger"><i class="fa fa-trash"></i> Limpiar publicados</a>
+        @if(Auth::user()->acl==3)
+        <a href="{{URL::to('social/publications/cleanall')}}" class="btn btn-mini btn-default"><i class="fa fa-trash"></i> Limpiar todos</a>
+        @endif
+    </div>
     {{Form::open(array('method' => 'get')) }}
     <div class="col-md-1 pull-right">
-        <button class="btn btn-mini">Filtrar</button>
+        <button class="btn btn-mini btn-primary ">Filtrar</button>
      </div>
 
      <div class="col-md-3 pull-right">
-
         <select name="filter" class="form-control">
             <option {{{ (Request::get('filter')==0 ? 'selected' : '') }}} value="0">Pendientes</option>
             <option {{{ (Request::get('filter')==5 ? 'selected' : '') }}} value="5">Fallidos</option>
             <option {{{ (Request::get('filter')==1 ? 'selected' : '') }}} value="1">Publicados</option>
-            <option {{{ (Request::get('filter')=='all' ? 'selected' : '') }}} value="all">Todos</option>
+            <option {{{ (Request::get('filter')=='all' || Request::get('filter')==null ?  'selected' : '') }}} value="all">Todos</option>
         </select>
      </div>
      {{Form::close()}}
@@ -26,11 +29,9 @@
         <div class="col-md-12">
         <div class="table-responsive">
 
-
               <table id="mytable" class="table table-bordred table-striped">
 
                    <thead>
-
                    <th><input type="checkbox" id="checkall" /></th>
                    <th>Titulo</th>
                    <th>Tipo</th>

@@ -32,7 +32,14 @@
 
                 //Publicaciones
                 Route::get('social/publications','Jsehersan\Social\Controllers\HomeController@getPublications');
+                Route::get('social/publications/clean','Jsehersan\Social\Controllers\PublicationsController@cleanPublish');
+
                 Route::get('social/publication/{id}','Jsehersan\Social\Controllers\HomeController@getPublication');
                 Route::get('social/publication/publish/{id}','Jsehersan\Social\Controllers\PublicationsController@setPublish');
 
+                 // Rutas de Root , usuario maestra para configuraciones
+                     Route::group(array('before' => 'root'),
+                            function() {
+                                Route::get('social/publications/cleanall','Jsehersan\Social\Controllers\PublicationsController@cleanallPublish');
+                            });
             });

@@ -62,6 +62,7 @@ class HomeController extends BaseController {
 
          $post=Post::
              status(Request::get('filter'))
+             ->orderBy('updated_at','DESC')
              ->paginate(20)
              ->appends(Request::only(['filter']));
 
