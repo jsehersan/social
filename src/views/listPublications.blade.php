@@ -5,6 +5,7 @@
 @section($tmp['section_main'])
     <div class="row">
     <div class="col-md-6">
+    
         <a href="{{URL::to('social/publications/clean')}}" class="btn btn-mini btn-danger"><i class="fa fa-trash"></i> Limpiar publicados</a>
         @if(Auth::user()->acl==3)
         <a href="{{URL::to('social/publications/cleanall')}}" class="btn btn-mini btn-default"><i class="fa fa-trash"></i> Limpiar todos</a>
