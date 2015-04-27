@@ -5,8 +5,9 @@
  * Date: 14/03/2015
  * Time: 16:23
  */
-use Jsehersan\Social\Channel\Facebook;
+
 use Channel;
+use Jsehersan\Social\Channel\Facebook;
 use Jsehersan\Social\Channel\Twitter;
 
 class Helper {
