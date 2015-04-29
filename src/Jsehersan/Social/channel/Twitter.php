@@ -33,20 +33,27 @@ use Illuminate\Support\Facades\File;
         }
     }
 
-    public function publish($data){
+     public function publish($data){
 
-          try{
-            $img=Helper::getInternalImg($data['picture']);
-            $link=Helper::sortUrl($data['link']);
-            $uploaded_media = Social::Twitter()->uploadMedia(['media' => File::get(public_path($img))]);
-            $res=Social::Twitter()->postTweet(['status' => $data['name'].' '.$link, 'media_ids' => $uploaded_media->media_id_string]);
-            return array('status'=>true);
-          }catch (\Exception $e){
+         try{
+             $img=parse_url($data['picture']);
 
-               return array('status'=>false,'error'=>$e->getMessage());
-          }
+             $link=Helper::sortUrl($data['link']);
+             $query=array(
+                 'status' => $data['name'].' '.$link
+             );
+             if (file_exists(public_path($img['path']))){
+                 $uploaded_media = Social::Twitter()->uploadMedia(['media' => File::get(public_path($img['path']))]);
+                 $query['media_ids']=$uploaded_media->media_id_string;
+             }
+             $res=Social::Twitter()->postTweet($query);
+             return array('status'=>true);
+         }catch (\Exception $e){
+
+             return array('status'=>false,'error'=>$e->getMessage());
+         }
 
 
-    }
+     }
 
 }
